@@ -1,7 +1,23 @@
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+.inputs {
+  display: flex;
+  flex-direction: row;
+}
+.inputs div {
+  padding: 0px 10px 0px 0px;
+}
+.list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.list p {
+  padding: 4px;
 }
