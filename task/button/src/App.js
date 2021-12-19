@@ -1,6 +1,6 @@
-import Button from "./components/button";
+import FormColor from "./components/Form";
 
 function App() {
-  return <Button />;
+  return <FormColor />;
 }
 export default App;

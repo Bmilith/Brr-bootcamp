@@ -1,33 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import Render from "./Colorlist";
 
-function GetApi(colors) {
+function GetApi() {
   const [newColor, setAdvice] = useState("");
-  const [history, sethistory] = useState([]);
   const [name, setname] = useState("Random color");
+  const [Randomcolor, setRandomcolor] = useState("");
+  // this is for random list (Lists previous (unique) text colors.)
+  // from api I only get one random color all time!
 
-  const url = "https://www.colr.org/json/color/random";
   const fetchData = async (e) => {
+    let url = "https://www.colr.org/json/color/random";
     try {
       const response = await fetch(url);
       const json = await response.json();
-      console.log(json);
-      console.log(history);
-      setAdvice(json.new_color);
-      sethistory((oldstate) => [
-        ...oldstate,
-        {
-          color: newColor,
-        },
-      ]);
+
+      setAdvice(json);
     } catch (error) {
       console.log("error", error);
     }
@@ -40,16 +35,15 @@ function GetApi(colors) {
           <Typography gutterBottom variant="h5" component="div">
             Button - Task
           </Typography>
-
+          <TextField
+            hiddenLabel
+            onChange={(e) => setname(e.target.value)}
+            id="filled-hidden-label-small"
+            variant="filled"
+            value={name}
+            size="small"
+          />{" "}
           <Typography color="text.secondary" variant="body2">
-            <TextField
-              hiddenLabel
-              onChange={(e) => setname(e.target.value)}
-              id="filled-hidden-label-small"
-              variant="filled"
-              placeholder="enter a name "
-              size="small"
-            />{" "}
             <br />
             <br /> Choose name and color for the button.
           </Typography>
@@ -60,18 +54,18 @@ function GetApi(colors) {
       <Box sx={{ mt: 3, ml: 1, mb: 1 }}>
         <Button
           variant="contained"
-          style={{ color: `#${newColor}` }}
+          style={{ color: `#${newColor.new_color}` }}
           onClick={fetchData}
           endIcon={<SendIcon />}
         >
           {name}
         </Button>
       </Box>
+
+      <Typography sx={{ m: 2 }}>Drag Me!</Typography>
       <Box sx={{ m: 2 }}>
-        <Stack direction="row" spacing={1}>
-          {history.map((item, index) => {
-            return <Chip key={index} label={`#${item.color}`} />;
-          })}
+        <Stack spacing={1}>
+          <Render newColor={newColor} Randomcolor={Randomcolor} />
         </Stack>
       </Box>
     </Box>
